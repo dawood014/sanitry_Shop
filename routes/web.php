@@ -78,7 +78,7 @@ Route::get('/', function () {
     return auth()->check()
         ? redirect('/dashboard')
         : redirect()->route('login');
-});
+})->name('website.home');
 
 Auth::routes();
 

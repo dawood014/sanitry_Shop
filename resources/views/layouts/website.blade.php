@@ -24,24 +24,28 @@
     </div>
     <div id="sb"></div>
 
-    @unless(isset($websiteHideAnnouncement) && $websiteHideAnnouncement)
+   @unless(($websiteHideAnnouncement ?? false) || request()->routeIs('login'))
         <div class="ann">
             @hasSection('announcement')
                 @yield('announcement')
             @else
                 <i class="fas fa-tag"></i> Summer Sale! Up to <span>20% OFF</span> on ACs &amp; Fridges!
-                <a href="{{ route('website.offers') }}">Shop Now &rarr;</a>
+                @if(\Illuminate\Support\Facades\Route::has('website.offers'))
+    <a href="{{ route('website.offers') }}">Shop Now &rarr;</a>
+@endif
             @endif
         </div>
     @endunless
 
+    @unless(request()->routeIs('login'))
     @include('website.partials.nav')
+@endunless
 
     <main>
         @yield('content')
     </main>
 
-    @unless(isset($websiteHideFooter) && $websiteHideFooter)
+   @unless(($websiteHideFooter ?? false) || request()->routeIs('login'))
         @include('website.partials.footer')
     @endunless
 
